@@ -85,8 +85,6 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>2.4.240</version>
-			<scope>test</scope>
 		</dependency>
 		<!--
 			NOTE: if you want to be able to test your API making real HTTP requests

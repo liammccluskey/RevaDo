@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RevaDoApplication {
 
 	public static void main(String[] args) {
+		System.out.println("starting");
 		SpringApplication.run(RevaDoApplication.class, args);
+		System.out.println("exiting");
 	}
-
 }
