@@ -15,6 +15,6 @@ public class UserController {
 
     @GetMapping("/test")
     public String runTest() {
-        return "test success";
+        return "users";
     }
 }

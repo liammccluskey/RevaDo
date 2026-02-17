@@ -2,6 +2,7 @@ package com.example.RevaDo.controllers;
 
 import com.example.RevaDo.services.TodoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,4 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
 
     private final TodoService todoService;
+
+    @GetMapping("/test")
+    public String runTest() {
+        return "todos";
+    }
 }
