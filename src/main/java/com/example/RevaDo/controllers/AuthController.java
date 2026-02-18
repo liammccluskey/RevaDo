@@ -36,6 +36,7 @@ public class AuthController {
         );
 
         UserResponseDTO userResponse = UserResponseDTO.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
                 .build();
