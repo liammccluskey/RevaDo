@@ -89,7 +89,9 @@ public class SubtaskService {
                         HttpStatus.BAD_REQUEST
                 ));
 
-        continueIfAuthorizedToUpdateSubtask(subtask);
+        Todo todo = continueIfAuthorizedToUpdateSubtask(subtask);
+
+        todo.getSubtasks().remove(subtask);
 
         subtaskRepository.deleteById(subtaskId);
     }
