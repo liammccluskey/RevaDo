@@ -17,6 +17,13 @@ public class TodoController {
 
     private final TodoService todoService;
 
+    @GetMapping("/{todoId}")
+    public ResponseEntity<Todo> getTodo(@PathVariable Long todoId) {
+        Todo todo = todoService.getTodo(todoId);
+
+        return ResponseEntity.ok(todo);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Todo>> getTodos(@PathVariable Long userId) {
         return ResponseEntity.ok(
@@ -34,14 +41,21 @@ public class TodoController {
     }
 
     @PatchMapping("/{todoId}")
-    public ResponseEntity<MessageResponseDTO> updateTodo(
+    public ResponseEntity<Todo> updateTodo(
             @PathVariable Long todoId,
             @RequestBody TodoRequestDTO todoDTO
     ) {
-        todoService.updateTodo(todoId, todoDTO);
+        Todo todo = todoService.updateTodo(todoId, todoDTO);
+
+        return ResponseEntity.ok(todo);
+    }
+
+    @DeleteMapping("/{todoId}")
+    public ResponseEntity<MessageResponseDTO> deleteTodo(@PathVariable Long todoId) {
+        todoService.deleteTodo(todoId);
 
         return ResponseEntity.ok(
-                new MessageResponseDTO("Successfully updated todo.")
+                new MessageResponseDTO("Successfully deleted todo")
         );
     }
 }

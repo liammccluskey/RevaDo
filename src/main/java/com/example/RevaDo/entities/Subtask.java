@@ -3,16 +3,19 @@ package com.example.RevaDo.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "subtasks")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Subtask {
 
     @Id
@@ -24,9 +27,11 @@ public class Subtask {
 
     private boolean completed = false;
 
-    private LocalDate createdAt;
+    @Column(updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "todo_id", nullable = false)
     @JsonIgnore
     private Todo todo;

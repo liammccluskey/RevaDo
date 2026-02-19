@@ -20,6 +20,16 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final AuthUtil authUtil;
 
+    public Todo getTodo(Long todoId) {
+        User currentUser = authUtil.getCurrentUser();
+
+        return todoRepository.findByIdAndUserId(todoId, currentUser.getId())
+                .orElseThrow(() -> new ApiException(
+                        "Could not find a todo with that id.",
+                        HttpStatus.BAD_REQUEST
+                ));
+    }
+
     public List<Todo> getTodosForCurrentUser() {
         User currentUser = authUtil.getCurrentUser();
 
@@ -39,11 +49,14 @@ public class TodoService {
     }
 
     @Transactional
-    public void updateTodo(Long todoId, TodoRequestDTO todoDTO) {
+    public Todo updateTodo(Long todoId, TodoRequestDTO todoDTO) {
         User currentUser = authUtil.getCurrentUser();
 
         Todo todo = todoRepository.findByIdAndUserId(todoId, currentUser.getId())
-                .orElseThrow(() -> new ApiException("Could not find a todo with the given Id.", HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new ApiException(
+                        "Could not find a todo with the given Id.",
+                        HttpStatus.BAD_REQUEST
+                ));
 
         if (todoDTO.getTitle() != null) {
             todo.setTitle(todoDTO.getTitle());
@@ -54,5 +67,16 @@ public class TodoService {
         if (todoDTO.getCompleted() != null) {
             todo.setCompleted(todoDTO.getCompleted());
         }
+
+        return todo;
+    }
+
+    public void deleteTodo(Long todoId) {
+        User currentUser = authUtil.getCurrentUser();
+
+        Todo todo = todoRepository.findByIdAndUserId(todoId, currentUser.getId())
+                .orElseThrow(() -> new ApiException("Could not find a todo with the given Id.", HttpStatus.BAD_REQUEST));
+
+        todoRepository.deleteById(todoId);
     }
 }
