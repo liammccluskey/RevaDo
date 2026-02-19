@@ -22,13 +22,12 @@ public class UserController {
 
     @GetMapping("/self")
     public ResponseEntity<UserResponseDTO> getSelf() {
-
-        User user = authUtil.getCurrentUser();
+        User currentUser = authUtil.getCurrentUser();
 
         UserResponseDTO userResponse = UserResponseDTO.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .name(user.getName())
+                .id(currentUser.getId())
+                .email(currentUser.getEmail())
+                .name(currentUser.getName())
                 .build();
 
         return ResponseEntity.ok(userResponse);

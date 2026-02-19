@@ -1,12 +1,14 @@
 package com.example.RevaDo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +31,13 @@ public class Todo {
 
     private boolean completed = false;
 
-    private LocalDate createdAt;
+    @Column(updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @OneToMany(

@@ -1,12 +1,14 @@
 package com.example.RevaDo.controllers;
 
 import com.example.RevaDo.DTOs.MessageResponseDTO;
-import com.example.RevaDo.DTOs.TodoDTO;
+import com.example.RevaDo.DTOs.TodoRequestDTO;
 import com.example.RevaDo.entities.Todo;
 import com.example.RevaDo.services.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/todos")
@@ -15,8 +17,15 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    @PostMapping("/")
-    public ResponseEntity<MessageResponseDTO> createTodo(@RequestBody TodoDTO todoDTO) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Todo>> getTodos(@PathVariable Long userId) {
+        return ResponseEntity.ok(
+                todoService.getTodosForCurrentUser()
+        );
+    }
+
+    @PostMapping
+    public ResponseEntity<MessageResponseDTO> createTodo(@RequestBody TodoRequestDTO todoDTO) {
         todoService.createTodo(todoDTO);
 
         return ResponseEntity.ok(
@@ -24,17 +33,12 @@ public class TodoController {
         );
     }
 
-//    @PatchMapping("/{todoId}")
-//    public ResponseEntity<MessageResponseDTO> updateTodo(
-//            @PathVariable Long todoId,
-//            @RequestBody TodoDTO todoDTO
-//    ) {
-//
-//    }
-
-    @PatchMapping("/{todoId}/toggle-completed")
-    public ResponseEntity<MessageResponseDTO> toggleCompleted(@PathVariable Long todoId) {
-        todoService.toggleCompleted(todoId);
+    @PatchMapping("/{todoId}")
+    public ResponseEntity<MessageResponseDTO> updateTodo(
+            @PathVariable Long todoId,
+            @RequestBody TodoRequestDTO todoDTO
+    ) {
+        todoService.updateTodo(todoId, todoDTO);
 
         return ResponseEntity.ok(
                 new MessageResponseDTO("Successfully updated todo.")
