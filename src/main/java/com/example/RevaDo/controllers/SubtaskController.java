@@ -16,7 +16,7 @@ public class SubtaskController {
 
     private final SubtaskService subtaskService;
 
-    @PostMapping("/{todoId}")
+    @PostMapping("/todo/{todoId}")
     public ResponseEntity<Todo> createSubtask(
             @PathVariable Long todoId,
             @RequestBody SubtaskRequestDTO subtaskDTO

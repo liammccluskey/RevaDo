@@ -23,7 +23,7 @@ public class SubtaskService {
 
     // Utils
 
-    public void continueIfAuthorizedToUpdateSubtask(Subtask subtask) {
+    public Todo continueIfAuthorizedToUpdateSubtask(Subtask subtask) {
         User currentUser = authUtil.getCurrentUser();
 
         Todo todo = subtask.getTodo();
@@ -34,6 +34,8 @@ public class SubtaskService {
                     HttpStatus.UNAUTHORIZED
             );
         }
+
+        return todo;
     }
 
     // Core
@@ -68,7 +70,7 @@ public class SubtaskService {
                         HttpStatus.BAD_REQUEST
                 ));
 
-        continueIfAuthorizedToUpdateSubtask(subtask);
+        Todo todo = continueIfAuthorizedToUpdateSubtask(subtask);
 
         if (subtaskDTO.getDescription() != null) {
             subtask.setDescription(subtaskDTO.getDescription());
