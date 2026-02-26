@@ -82,6 +82,7 @@ public class SubtaskService {
         return todo;
     }
 
+    @Transactional
     public void deleteSubtask(Long subtaskId) {
         Subtask subtask = subtaskRepository.findById(subtaskId)
                 .orElseThrow(() -> new ApiException(

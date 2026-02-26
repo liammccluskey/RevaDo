@@ -1,6 +1,7 @@
 package com.example.RevaDo.controllers;
 
 import com.example.RevaDo.DTOs.LoginRequestDTO;
+import com.example.RevaDo.DTOs.LoginResponseDTO;
 import com.example.RevaDo.DTOs.RegistrationRequestDTO;
 import com.example.RevaDo.DTOs.UserResponseDTO;
 import com.example.RevaDo.entities.User;
@@ -21,10 +22,10 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
         String token = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")

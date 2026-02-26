@@ -5,6 +5,7 @@ import com.example.RevaDo.DTOs.TodoRequestDTO;
 import com.example.RevaDo.entities.Todo;
 import com.example.RevaDo.services.TodoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,12 +33,12 @@ public class TodoController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageResponseDTO> createTodo(@RequestBody TodoRequestDTO todoDTO) {
-        todoService.createTodo(todoDTO);
+    public ResponseEntity<Todo> createTodo(@RequestBody TodoRequestDTO todoDTO) {
+        Todo todo = todoService.createTodo(todoDTO);
 
-        return ResponseEntity.ok(
-                new MessageResponseDTO("Successfully created Todo.")
-        );
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(todo);
     }
 
     @PatchMapping("/{todoId}")

@@ -33,10 +33,10 @@ public class TodoService {
     public List<Todo> getTodosForCurrentUser() {
         User currentUser = authUtil.getCurrentUser();
 
-        return todoRepository.findByUser_IdOrderByCreatedAtDesc(currentUser.getId());
+        return todoRepository.findByUser_IdOrderByCreatedAtAsc(currentUser.getId());
     }
 
-    public void createTodo(TodoRequestDTO todoDTO) {
+    public Todo createTodo(TodoRequestDTO todoDTO) {
         User currentUser = authUtil.getCurrentUser();
 
         Todo todo = Todo.builder()
@@ -45,7 +45,7 @@ public class TodoService {
                 .user(currentUser)
                 .build();
 
-        todoRepository.save(todo);
+        return todoRepository.save(todo);
     }
 
     @Transactional
