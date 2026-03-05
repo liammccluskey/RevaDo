@@ -40,6 +40,7 @@ public class Todo {
     @JsonIgnore
     private User user;
 
+    @Builder.Default
     @OneToMany(
             mappedBy = "todo",
             cascade = CascadeType.ALL,
